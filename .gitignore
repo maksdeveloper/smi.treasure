@@ -1,0 +1,12 @@
+.idea/
+/vendor
+/public_html/.htaccess
+/public_html/index.php
+/public_html/index-test.php
+/config/db.php
+/config/params.php
+/public_html/uploads
+/codeception.yml
+/vagrant
+/yii
+/yii.bat
