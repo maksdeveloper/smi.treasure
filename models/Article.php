@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "article".
  *
@@ -39,7 +40,7 @@ class Article extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['title', 'description', 'content'], 'string'],
-            [['date'], 'date', 'format'=>'php:Y-m-d'],
+            [['date'], 'date', 'format' => 'php:Y-m-d'],
             [['date'], 'default', 'value' => date('Y-m-d')],
             [['title', 'image'], 'string', 'max' => 255],
         ];
@@ -64,12 +65,34 @@ class Article extends \yii\db\ActiveRecord
         ];
     }
 
-   public function saveImage($filename)
-   {
+    public function saveImage($filename)
+    {
 
-    $this->image = $filename;
+        $this->image = $filename;
 
-    return $this->save(false);
+        return $this->save(false);
 
-   }
+    }
+
+    public function getImage()
+    {
+
+        return ( $this->image ) ? '/uploads/' . $this->image :  '/uploads/no-image.png';
+
+    }
+
+
+    public function deleteImage()
+    {
+        $imageUploadModel = new ImageUpload();
+        $imageUploadModel->deleteCurrentImage($this->image);
+    }
+
+    public function beforeDelete()
+    {
+        $this->deleteImage();
+
+        return parent::beforeDelete();
+    }
+
 }
