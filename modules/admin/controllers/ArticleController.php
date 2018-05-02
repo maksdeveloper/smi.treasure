@@ -208,7 +208,7 @@ class ArticleController extends Controller
             $tags = Yii::$app->request->post('tags');
 
             $saveTags = $article->saveTags( $tags );
-
+            
             if( $saveTags ){
                 return $this->redirect(['view', 'id'=>$article->id]);
             }

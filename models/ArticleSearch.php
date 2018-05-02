@@ -6,7 +6,6 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Article;
-
 /**
  * ArticleSearch represents the model behind the search form of `app\models\Article`.
  */
@@ -22,7 +21,6 @@ class ArticleSearch extends Article
             [['title', 'description', 'content', 'date', 'image'], 'safe'],
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -31,7 +29,6 @@ class ArticleSearch extends Article
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
-
     /**
      * Creates data provider instance with search query applied
      *
@@ -42,21 +39,16 @@ class ArticleSearch extends Article
     public function search($params)
     {
         $query = Article::find();
-
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -66,12 +58,10 @@ class ArticleSearch extends Article
             'status' => $this->status,
             'category_id' => $this->category_id,
         ]);
-
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'image', $this->image]);
-
         return $dataProvider;
     }
 }
