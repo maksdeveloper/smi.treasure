@@ -30,7 +30,7 @@ class PublicAsset extends AssetBundle
         'style/css/responsive.css',
     ];
     public $js = [
-        'style/js/jquery-1.11.3.min.js',
+//        'style/js/jquery-1.11.3.min.js',
         'style/js/bootstrap.min.js',
         'style/js/owl.carousel.min.js',
         'style/js/jquery.stickit.min.js',
