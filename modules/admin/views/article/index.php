@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ArticleSearch */
@@ -27,8 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'description:ntext',
-            'content:ntext',
+//            'description:ntext',
+//            'content:ntext',
+            [
+                'format' => 'html',
+                'label' => 'description',
+                'value' => function($data){
+                    return StringHelper::truncate($data->description, 200);
+                }
+            ],
+            [
+                    'format' => 'ntext',
+                    'label' => 'content',
+                    'value' => function($data){
+                        return StringHelper::truncate($data->content, 200);
+                }
+            ],
             'date',
             [
                     'format' => 'html',

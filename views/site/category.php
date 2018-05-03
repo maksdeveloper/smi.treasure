@@ -8,7 +8,10 @@ use yii\widgets\LinkPager;
         <div class="row">
             <div class="col-md-8">
 <?php
-foreach($articles as $article): ?>
+foreach($articles as $article):
+    $author = ($article->author) ? $article->author->name : 'Noname';
+
+    ?>
                 <article class="post post-list">
                     <div class="row">
                         <div class="col-md-6">
@@ -32,7 +35,7 @@ foreach($articles as $article): ?>
                                     </p>
                                 </div>
                                 <div class="social-share">
-                                    <span class="social-share-title pull-left text-capitalize">By Rubel On <?php echo $article->getDate();?></span>
+                                    <span class="social-share-title pull-left text-capitalize">By <?php echo $author;?> On <?php echo $article->getDate();?></span>
 
                                 </div>
                             </div>

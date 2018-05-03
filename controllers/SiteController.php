@@ -116,6 +116,7 @@ class SiteController extends Controller
         $recent  = Article::getRecent();
         $categories = Category::getAll();
 
+        $article->viewedCounter();
 
         return $this->render('single', [
             'article' => $article,
