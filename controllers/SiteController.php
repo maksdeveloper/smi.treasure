@@ -4,9 +4,11 @@ namespace app\controllers;
 
 use app\models\Article;
 use app\models\Category;
+use app\models\Tag;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -115,6 +117,7 @@ class SiteController extends Controller
         $popular = Article::getPopular();
         $recent  = Article::getRecent();
         $categories = Category::getAll();
+        $tags = $this->actionGetTags($id);
 
         $article->viewedCounter();
 
@@ -122,7 +125,8 @@ class SiteController extends Controller
             'article' => $article,
             'popular' => $popular,
             'recent' => $recent,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -151,4 +155,25 @@ class SiteController extends Controller
             'categories' => $categories
         ]);
     }
+
+    public function actionGetTags( $id )
+    {
+
+        $article = Article::findOne($id);
+
+        $selectedTags = $article->getSelectedTags();
+
+        $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
+
+        $arrayTagsName = [];
+
+        foreach ($selectedTags as $tag_id){
+            $arrayTagsName[] = $tags[$tag_id];
+        }
+
+        return $arrayTagsName;
+
+    }
+
+
 }

@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 
 $author = ($article->author) ? $article->author->name : 'Noname';
+
 ?>
 <div class="main-content">
     <div class="container">
@@ -23,8 +24,9 @@ $author = ($article->author) ? $article->author->name : 'Noname';
                            <?php echo $article->content;?>
                         </div>
                         <div class="decoration">
-                            <a href="#" class="btn btn-default">Decoration</a>
-                            <a href="#" class="btn btn-default">Decoration</a>
+                            <?php foreach ($tags as $tag): ?>
+                            <a href="#" class="btn btn-default"><?php echo $tag;?></a>
+                            <?php endforeach; ?>
                         </div>
 
                         <div class="social-share">

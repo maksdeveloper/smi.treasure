@@ -6,7 +6,6 @@
 /config/db.php
 /config/params.php
 /public_html/uploads
-
 /codeception.yml
 /vagrant
 /yii
