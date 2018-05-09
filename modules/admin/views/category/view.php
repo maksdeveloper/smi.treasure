@@ -30,6 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
+            [
+                'attribute' => 'gallery',
+                'value' => function ($data) {
+                    $gallery = '';
+                    foreach($data->getBehavior('galleryBehavior')->getImages() as $image) {
+                        $gallery .= '<div class="image" style="margin: 5px">'.Html::img($image->getUrl('small')).'</div>';
+                    }
+                    return $gallery;
+                },
+                'format' => 'html'
+            ]
         ],
     ]) ?>
 

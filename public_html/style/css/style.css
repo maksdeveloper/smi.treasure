@@ -1042,9 +1042,8 @@ blog css
     border: 1px solid #60c7eb;
     font-size: 14px;
     height: 35px;
-    width: 105px;
     line-height: 35px;
-    padding: 0;
+    padding: 0 3px;
     border-radius: 0;
     margin: 30px 6px 30px 0;
 }
@@ -1151,10 +1150,20 @@ blog css
     color: #212121;
     font-weight: 700;
 }
-
+.single-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 155px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    margin-right: 5px;
+}
 .single-item p {
-    text-align: center;
-    padding-bottom: 0;
+    font-size: 26px;
+    color: white;
+    font-weight: 600;
 }
 
 .related-post-carousel .owl-buttons {
@@ -1176,11 +1185,6 @@ blog css
     padding-bottom: 0;
 }
 
-.single-item p {
-    text-align: center;
-    padding-bottom: 0;
-    color: #444444;
-}
 
 .bottom-comment {
     background: #fff;

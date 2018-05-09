@@ -3,16 +3,18 @@
 namespace app\controllers;
 
 use app\models\Article;
+use app\models\ArticleTag;
 use app\models\Category;
 use app\models\Tag;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
+
 use app\models\ContactForm;
 
 class SiteController extends Controller
@@ -118,6 +120,9 @@ class SiteController extends Controller
         $recent  = Article::getRecent();
         $categories = Category::getAll();
         $tags = $this->actionGetTags($id);
+        $gallery = Category::findOne($article->category_id)->getBehavior('galleryBehavior')->getImages();
+
+
 
         $article->viewedCounter();
 
@@ -126,7 +131,8 @@ class SiteController extends Controller
             'popular' => $popular,
             'recent' => $recent,
             'categories' => $categories,
-            'tags' => $tags
+            'tags' => $tags,
+            'gallery' => $gallery,
         ]);
     }
 
@@ -141,13 +147,45 @@ class SiteController extends Controller
             ->all();
 
         $data['articles'] = $articles;
+
         $data['pagination'] = $pagination;
         $popular = Article::getPopular();
         $recent  = Article::getRecent();
         $categories = Category::getAll();
 
 
+
+
         return $this->render('category', [
+            'articles' => $data['articles'],
+            'pagination' => $data['pagination'],
+            'popular' => $popular,
+            'recent' => $recent,
+            'categories' => $categories,
+
+        ]);
+    }
+
+    public function actionTag($id)
+    {
+
+        $query = ArticleTag::find()->where(['tag_id' => $id])->with('article');
+
+        $countQuery = clone $query;
+        $pagination = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 2]);
+
+        $articles = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        $data['articles'] = $articles;
+        $data['pagination'] = $pagination;
+        $popular = Article::getPopular();
+        $recent  = Article::getRecent();
+        $categories = Category::getAll();
+
+
+        return $this->render('tag', [
             'articles' => $data['articles'],
             'pagination' => $data['pagination'],
             'popular' => $popular,
@@ -168,7 +206,8 @@ class SiteController extends Controller
         $arrayTagsName = [];
 
         foreach ($selectedTags as $tag_id){
-            $arrayTagsName[] = $tags[$tag_id];
+
+            $arrayTagsName[$tag_id] = $tags[$tag_id];
         }
 
         return $arrayTagsName;

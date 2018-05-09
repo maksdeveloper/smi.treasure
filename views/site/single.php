@@ -1,7 +1,9 @@
 <?php
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 $author = ($article->author) ? $article->author->name : 'Noname';
+
 
 ?>
 <div class="main-content">
@@ -24,8 +26,8 @@ $author = ($article->author) ? $article->author->name : 'Noname';
                            <?php echo $article->content;?>
                         </div>
                         <div class="decoration">
-                            <?php foreach ($tags as $tag): ?>
-                            <a href="#" class="btn btn-default"><?php echo $tag;?></a>
+                            <?php foreach ($tags as $kay=>$tag): ?>
+                            <a href="<?php echo Url::toRoute(['site/tag', 'id' => $kay]); ?>" class="btn btn-default"><?php echo $tag;?></a>
                             <?php endforeach; ?>
                         </div>
 
@@ -52,7 +54,11 @@ $author = ($article->author) ? $article->author->name : 'Noname';
                 <div class="row"><!--blog next previous-->
                     <div class="col-md-6">
                         <div class="single-blog-box">
-                            <a href="#">
+       <a href="#">
+           <?php //echo Url::current(['id' => $article->id - 1], true);
+                            //TODO create the check for the first and last page
+           ?>
+
                                 <img src="/uploads/images/blog-next.jpg" alt="">
 
                                 <div class="overlay">
@@ -67,9 +73,13 @@ $author = ($article->author) ? $article->author->name : 'Noname';
                             </a>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="single-blog-box">
-                            <a href="#">
+                         <a href="#">
+                         <?php //echo Url::current(['id' => $article->id + 1], true)
+                            //TODO create the check for the first and last page
+                         ?>
                                 <img src="/uploads/images/blog-next.jpg" alt="">
 
                                 <div class="overlay">
@@ -83,64 +93,31 @@ $author = ($article->author) ? $article->author->name : 'Noname';
                         </div>
                     </div>
                 </div><!--blog next previous end-->
-                <div class="related-post-carousel"><!--related post carousel-->
+
+                <?php if(isset($gallery)): ?>
+                <div class="related-post-carousel">
                     <div class="related-heading">
-                        <h4>You might also like</h4>
+                        <h4>Beautiful places in <?php echo $article->category->title;?></h4>
                     </div>
                     <div class="items">
-                        <div class="single-item">
-                            <a href="#">
-                                <img src="/uploads/images/related-post-1.jpg" alt="">
+                        <?php
+                        foreach($gallery as $image):
 
-                                <p>Just Wondering at Beach</p>
-                            </a>
+                            ?>
+                        <div class="single-item" style="background-image: url('<?php echo $image->getUrl('small'); ?>')" >
+
+
+                                <p><?php echo $image->name; ?></p>
+
+
                         </div>
-
-
-                        <div class="single-item">
-                            <a href="#">
-                                <img src="/uploads/images/related-post-2.jpg" alt="">
-
-                                <p>Just Wondering at Beach</p>
-                            </a>
-                        </div>
-
-
-                        <div class="single-item">
-                            <a href="#">
-                                <img src="/uploads/images/related-post-3.jpg" alt="">
-
-                                <p>Just Wondering at Beach</p>
-                            </a>
-                        </div>
-
-
-                        <div class="single-item">
-                            <a href="#">
-                                <img src="/uploads/images/related-post-1.jpg" alt="">
-
-                                <p>Just Wondering at Beach</p>
-                            </a>
-                        </div>
-
-                        <div class="single-item">
-                            <a href="#">
-                                <img src="/uploads/images/related-post-2.jpg" alt="">
-
-                                <p>Just Wondering at Beach</p>
-                            </a>
-                        </div>
-
-
-                        <div class="single-item">
-                            <a href="#">
-                                <img src="/uploads/images/related-post-3.jpg" alt="">
-
-                                <p>Just Wondering at Beach</p>
-                            </a>
-                        </div>
+                        <?php
+                        endforeach;
+                        ?>
                     </div>
-                </div><!--related post carousel-->
+                </div>
+                <?php endif;?>
+
                 <div class="bottom-comment"><!--bottom comment-->
                     <h4>3 comments</h4>
 
