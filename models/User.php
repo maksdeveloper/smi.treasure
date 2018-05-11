@@ -105,4 +105,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->save(false);
     }
+
+    public function getImage()
+    {
+        return ( $this->photo ) ? '/uploads/' . $this->photo :  '/uploads/no-image.png';
+    }
+
+    public function getDate()
+    {
+        return Yii::$app->formatter->asDate($this->date);
+    }
+
 }

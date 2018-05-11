@@ -44,66 +44,54 @@ $author = ($article->author) ? $article->author->name : 'Noname';
                         </div>
                     </div>
                 </article>
-                <div class="top-comment"><!--top comment-->
-                    <img src="/uploads/images/comment.jpg" class="pull-left img-circle" alt="">
-                    <h4>Rubel Miah</h4>
 
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy hello ro mod tempor
-                        invidunt ut labore et dolore magna aliquyam erat.</p>
-                </div><!--top comment end-->
-                <div class="row"><!--blog next previous-->
+                <div class="row next-prev"><!--blog next previous-->
+
+
                     <div class="col-md-6">
+                        <?php if($prev !== null): ?>
                         <div class="single-blog-box">
-       <a href="#">
-           <?php //echo Url::current(['id' => $article->id - 1], true);
-                            //TODO create the check for the first and last page
-           ?>
+                         <a href="<?php echo Url::current(['id' => $prev->id], true);?>">
 
-                                <img src="/uploads/images/blog-next.jpg" alt="">
 
-                                <div class="overlay">
+                                <div class="overlay" style="background-image: url('<?php echo $prev->getImage();?>'); height: 120px">
 
                                     <div class="promo-text">
                                         <p><i class=" pull-left fa fa-angle-left"></i></p>
-                                        <h5>Rubel is doing Cherry theme</h5>
+                                        <h5><?php echo $prev->title;?></h5>
                                     </div>
                                 </div>
-
-
                             </a>
                         </div>
+                        <?php endif; ?>
                     </div>
 
                     <div class="col-md-6">
+                        <?php if($next !== null): ?>
                         <div class="single-blog-box">
-                         <a href="#">
-                         <?php //echo Url::current(['id' => $article->id + 1], true)
-                            //TODO create the check for the first and last page
-                         ?>
-                                <img src="/uploads/images/blog-next.jpg" alt="">
+                         <a href="<?php echo Url::current(['id' => $next->id], true); ?>">
 
-                                <div class="overlay">
+                                <div class="overlay" style="background-image: url('<?php echo $next->getImage();?>'); height: 120px">
                                     <div class="promo-text">
                                         <p><i class=" pull-right fa fa-angle-right"></i></p>
-                                        <h5>Rubel is doing Cherry theme</h5>
+                                        <h5><?php echo $next->title;?></h5>
 
                                     </div>
                                 </div>
                             </a>
                         </div>
+                        <?php endif; ?>
                     </div>
+
                 </div><!--blog next previous end-->
 
-                <?php if(isset($gallery)): ?>
+                <?php if(!empty($gallery)): ?>
                 <div class="related-post-carousel">
                     <div class="related-heading">
                         <h4>Beautiful places in <?php echo $article->category->title;?></h4>
                     </div>
                     <div class="items">
-                        <?php
-                        foreach($gallery as $image):
-
-                            ?>
+                        <?php foreach($gallery as $image): ?>
                         <div class="single-item" style="background-image: url('<?php echo $image->getUrl('small'); ?>')" >
 
 
@@ -111,52 +99,17 @@ $author = ($article->author) ? $article->author->name : 'Noname';
 
 
                         </div>
-                        <?php
-                        endforeach;
-                        ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
                 <?php endif;?>
 
-                <div class="bottom-comment"><!--bottom comment-->
-                    <h4>3 comments</h4>
 
-                    <div class="comment-img">
-                        <img class="img-circle" src="/uploads/images/comment-img.jpg" alt="">
-                    </div>
-
-                    <div class="comment-text">
-                        <a href="#" class="replay btn pull-right"> Replay</a>
-                        <h5>Rubel Miah</h5>
-
-                        <p class="comment-date">
-                            December, 02, 2015 at 5:57 PM
-                        </p>
-
-
-                        <p class="para">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                            diam nonumy
-                            eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-                            voluptua. At vero eos et cusam et justo duo dolores et ea rebum.</p>
-                    </div>
-                </div>
-                <!-- end bottom comment-->
-
-
-                <div class="leave-comment"><!--leave comment-->
-                    <h4>Leave a reply</h4>
-
-
-                    <form class="form-horizontal contact-form" role="form" method="post" action="#">
-                        <div class="form-group">
-                            <div class="col-md-12">
-										<textarea class="form-control" rows="6" name="message"
-                                                  placeholder="Write Massage"></textarea>
-                            </div>
-                        </div>
-                        <a href="#" class="btn send-btn">Post Comment</a>
-                    </form>
-                </div><!--end leave comment-->
+                <?php echo $this->render('/partials/comment', [
+                    'article'=>$article,
+                    'comments'=>$comments,
+                    'commentForm'=>$commentForm
+                ])?>
             </div>
 
 

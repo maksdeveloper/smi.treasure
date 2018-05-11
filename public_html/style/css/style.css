@@ -1068,7 +1068,9 @@ blog css
 .top-comment p {
     line-height: 24px;
 }
-
+.next-prev{
+    height: 150px;
+}
 .single-blog-box {
     position: relative;
     text-align: center;
@@ -1077,9 +1079,9 @@ blog css
 
 /*single blog*/
 .single-blog-box .overlay {
-    background-color: rgba(0, 0, 0, 0.2);
     width: 100%;
-    height: 100%;
+    height: 120px;
+    background-position: center center;
     position: absolute;
     left: 0;
     top: 0;

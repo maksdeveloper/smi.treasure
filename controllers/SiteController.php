@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Article;
 use app\models\ArticleTag;
 use app\models\Category;
+use app\models\CommentForm;
 use app\models\Tag;
 use Yii;
 use yii\data\Pagination;
@@ -122,17 +123,26 @@ class SiteController extends Controller
         $tags = $this->actionGetTags($id);
         $gallery = Category::findOne($article->category_id)->getBehavior('galleryBehavior')->getImages();
 
-
+        $prevArticle = Article::find()->where(['<', 'id', $id])->orderBy('id desc')->one();
+        $nextArticle = Article::find()->where(['>', 'id', $id])->one();
 
         $article->viewedCounter();
 
+        $comments = $article->getArticleComments();
+        $commentForm = new CommentForm();
+
+
         return $this->render('single', [
             'article' => $article,
+            'prev' => $prevArticle,
+            'next' => $nextArticle,
             'popular' => $popular,
             'recent' => $recent,
             'categories' => $categories,
             'tags' => $tags,
             'gallery' => $gallery,
+            'comments' => $comments,
+            'commentForm' => $commentForm,
         ]);
     }
 
@@ -214,5 +224,19 @@ class SiteController extends Controller
 
     }
 
+    public function actionComment($id)
+    {
+        $model = new CommentForm();
+
+        if(Yii::$app->request->isPost)
+        {
+            $model->load(Yii::$app->request->post());
+            if($model->saveComment($id))
+            {
+                Yii::$app->getSession()->setFlash('comment', 'Your comment will be added soon!');
+                return $this->redirect(['site/view','id'=>$id]);
+            }
+        }
+    }
 
 }

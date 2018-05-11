@@ -220,4 +220,17 @@ class Article extends \yii\db\ActiveRecord
 
     }
 
+
+    public function getComments()
+    {
+
+        return $this->hasMany(Comment::className(), ['article_id' => 'id']);
+
+    }
+
+    public function getArticleComments()
+    {
+        return $this->getComments()->where(['status'=>1])->all();
+    }
+
 }
