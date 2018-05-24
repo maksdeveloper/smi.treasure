@@ -846,18 +846,17 @@ footer instragram
 }
 
 .footer-widget {
-    padding: 70px 0;
+    margin: auto;
 
 }
 
 .about-content {
-    padding-top: 35px;
-    line-height: 24px;
+
     font-family: 'Merriweather', serif
 }
 
 .address {
-    padding-top: 20px;
+
     font-weight: 600;
 
 }
@@ -1644,4 +1643,27 @@ p.go-back-home a:hover {
     background: #00BFF3;
     color: #fff;
     border-color: #00BFF3;
+}
+
+.address p a:hover {
+    text-decoration: none;
+    color: #00BFF3
+}
+
+.d-flex
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer-first{
+    height: 80px;
+}
+.social p
+{
+    margin-left: 20px;
+}
+
+.social p a .fa{
+    font-size: 30px;
 }
